@@ -117,3 +117,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 5951868580250530815}
+  range: 15
+  projectileParticles: {fileID: 7454755920495842273}
+--- !u!198 &7454755920495842273 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2183710381492102138, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
+  m_PrefabInstance: {fileID: 8735439592524509211}
+  m_PrefabAsset: {fileID: 0}

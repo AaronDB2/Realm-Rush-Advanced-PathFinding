@@ -14,10 +14,33 @@ public class EnemyMover : MonoBehaviour
     [Range(0f, 5f)]
     float speed = 1f;
 
-    // Start is called before the first frame update
-    void Start()
+    // OnEnable is called when game object is enabled
+    void OnEnable()
     {
+        FindPath();
+        ReturnToStart();
         StartCoroutine(FollowPath());
+    }
+
+    // Function for finding the path
+    void FindPath()
+    {
+        path.Clear();
+
+        // Find gameobject with path tag
+        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path"); 
+
+        // Loop through the waypoints array and add the waypoints to the List
+        foreach (GameObject waypoint in waypoints)
+        {
+            path.Add(waypoint.GetComponent<Waypoint>());
+        }
+    }
+
+    // Set the gameobject to the first waypoint in path
+    void ReturnToStart()
+    {
+        transform.position = path[0].transform.position;
     }
 
     // Coroutine Function for letting object follow the path
@@ -41,5 +64,7 @@ public class EnemyMover : MonoBehaviour
 			}
 
         }
+
+        gameObject.SetActive(false);
     }
 }
