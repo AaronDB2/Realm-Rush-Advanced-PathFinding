@@ -5,8 +5,8 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
 	[SerializeField]
-	[Tooltip("Object to instantiate on objects that have isPlaceable flag set to true ")]
-	GameObject towerPrefab;
+	[Tooltip("Tower script")]
+	Tower towerPrefab;
 
 	[SerializeField]
 	[Tooltip("Set to true if objects can be placed on this object")]
@@ -18,9 +18,8 @@ public class Waypoint : MonoBehaviour
 	{
 		if(isPlaceable)
 		{
-			// Instantiate the tower
-			Instantiate(towerPrefab, transform.position, Quaternion.identity);
-			isPlaceable = false;
+			bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);
+			isPlaceable = !isPlaced;
 		}
 	}
 }

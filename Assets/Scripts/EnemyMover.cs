@@ -14,6 +14,8 @@ public class EnemyMover : MonoBehaviour
     [Range(0f, 5f)]
     float speed = 1f;
 
+    Enemy enemy;
+
     // OnEnable is called when game object is enabled
     void OnEnable()
     {
@@ -22,8 +24,13 @@ public class EnemyMover : MonoBehaviour
         StartCoroutine(FollowPath());
     }
 
-    // Function for finding the path
-    void FindPath()
+	void Start()
+	{
+		enemy = GetComponent<Enemy>();
+	}
+
+	// Function for finding the path
+	void FindPath()
     {
         path.Clear();
 
@@ -65,6 +72,7 @@ public class EnemyMover : MonoBehaviour
 
         }
 
+        enemy.StealGold();
         gameObject.SetActive(false);
     }
 }

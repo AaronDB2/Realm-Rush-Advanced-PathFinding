@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField]
+	[Tooltip("Reward for destroying this enemy")]
+	int goldReward = 25;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	[SerializeField]
+	[Tooltip("Penalty for when the enemy makes it to the end")]
+	int goldPenalty = 25;
+
+	Bank bank;
+
+	// Runs at the start of object initialisation
+	void Start()
+	{
+		bank = FindObjectOfType<Bank>();
+	}
+
+	// Function for handeling reward gold logic
+	public void RewardGold()
+	{
+		if(bank == null) return;
+		bank.Deposit(goldReward);
+	}
+
+	// Function for handeling steal gold logic
+	public void StealGold()
+	{
+		if (bank == null) return;
+		bank.Withdraw(goldPenalty);
+	}
 }

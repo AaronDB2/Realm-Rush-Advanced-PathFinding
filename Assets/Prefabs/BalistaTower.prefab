@@ -89,38 +89,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
---- !u!4 &5951868580250530815 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3144582324300694500, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
-  m_PrefabInstance: {fileID: 8735439592524509211}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6010675087091536946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3049131714819384361, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
-  m_PrefabInstance: {fileID: 8735439592524509211}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6167490623952465045 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3219458064393657486, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
-  m_PrefabInstance: {fileID: 8735439592524509211}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3158787345086427752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167490623952465045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b601f860b4243e340b09fa6ac87a246f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 5951868580250530815}
-  range: 15
-  projectileParticles: {fileID: 7454755920495842273}
---- !u!198 &7454755920495842273 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2183710381492102138, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
   m_PrefabInstance: {fileID: 8735439592524509211}
   m_PrefabAsset: {fileID: 0}
