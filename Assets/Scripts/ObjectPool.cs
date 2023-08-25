@@ -6,7 +6,8 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("Size of the object pool (amount of enemies to spwan)")]
+    [Tooltip("Size of the object pool (amount of enemies to spawn)")]
+    [Range(0, 50)]
     int poolSize = 5;
 
     [SerializeField]
@@ -15,6 +16,7 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Spawn timer")]
+    [Range(0.1f, 30f)]
     float spawnTimer = 1f;
 
     GameObject[] pool;
