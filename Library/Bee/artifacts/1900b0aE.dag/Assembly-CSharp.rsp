@@ -362,8 +362,8 @@
 "Assets/Scripts/EnemyMover.cs"
 "Assets/Scripts/ObjectPool.cs"
 "Assets/Scripts/TargetLocator.cs"
+"Assets/Scripts/Tile.cs"
 "Assets/Scripts/Tower.cs"
-"Assets/Scripts/Waypoint.cs"
 -langversion:9.0
 
 /deterministic

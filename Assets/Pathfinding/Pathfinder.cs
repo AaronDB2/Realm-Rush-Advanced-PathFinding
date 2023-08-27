@@ -43,8 +43,15 @@ public class Pathfinder : MonoBehaviour
         startNode = gridManager.Grid[startCoordinates];
         destinationNode = gridManager.Grid[destinationCoordinates];
 
+        GetNewPath();
+	}
+
+    // Function for handeling creating path logic
+    public List<Node> GetNewPath()
+    {
+        gridManager.ResetNodes();
 		BreadthFirstSearch();
-        BuildPath();
+		return BuildPath();
 	}
 
     // Function for exploring neighbor nodes
@@ -81,6 +88,9 @@ public class Pathfinder : MonoBehaviour
 	// Function for BreadthFirstSearch algorithm (path finding)
 	void BreadthFirstSearch()
     {
+        frontier.Clear();
+        reached.Clear();
+
         bool isRunning = true;
 
         frontier.Enqueue(startNode);
@@ -121,6 +131,28 @@ public class Pathfinder : MonoBehaviour
         path.Reverse();
 
         return path;
+    }
+
+    // Function that figures out if something will block the path
+    // This function is used when a tower is placed in the world to check if path will be blocked
+    public bool WillBlockPath(Vector2Int coordinates)
+    {
+        if(grid.ContainsKey(coordinates))
+        {
+            bool previousState = grid[coordinates].isWalkable;
+
+            grid[coordinates].isWalkable = false;
+            List<Node> newPath = GetNewPath();
+            grid[coordinates].isWalkable = previousState;
+
+            if(newPath.Count <= 1)
+            {
+                GetNewPath();
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
