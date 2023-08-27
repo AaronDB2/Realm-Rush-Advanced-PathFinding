@@ -16,12 +16,22 @@ public class CoordinateLabeler : MonoBehaviour
 	[Tooltip("Color of the coordinate label when towers cant be build")]
 	Color blockedColor = Color.grey;
 
+	[SerializeField]
+	[Tooltip("Color of the coordinate label for explored nodes")]
+	Color exploredColor = Color.yellow;
+
+	[SerializeField]
+	[Tooltip("Color of the coordinate label for paths")]
+	Color pathColor = new Color(1f, 0.5f, 0f);
+
 	TextMeshPro label;
 	Vector2Int coordinates = new Vector2Int();
-	Waypoint waypoint;
+	GridManager gridManager;
 
 	void Awake()
 	{
+		gridManager = FindObjectOfType<GridManager>();
+
 		// Get TextMeshPro label
 		label = GetComponent<TextMeshPro>();
 
@@ -33,7 +43,6 @@ public class CoordinateLabeler : MonoBehaviour
 			label.enabled = false;
 		}
 
-		waypoint = GetComponentInParent<Waypoint>();
 		DisplayCoordinates();
 	}
 
@@ -55,12 +64,28 @@ public class CoordinateLabeler : MonoBehaviour
 	// Function for setting the color of the coordinate label
 	void SetLabelColor()
 	{
-		if (waypoint.IsPlaceable)
-		{
-			label.color = defaultColor;
-		} else
+		// Check if gridmanager exists
+		if (gridManager == null) { return; }
+
+		Node node = gridManager.GetNode(coordinates);
+
+		// Check if node is not null;
+		if (node == null) { return; }
+
+		if(!node.isWalkable)
 		{
 			label.color = blockedColor;
+		}
+		else if (node.isPath)
+		{
+			label.color = pathColor;
+		}
+		else if (node.isExplored)
+		{
+			label.color = exploredColor;
+		} else
+		{
+			label.color = defaultColor;
 		}
 	}
 
