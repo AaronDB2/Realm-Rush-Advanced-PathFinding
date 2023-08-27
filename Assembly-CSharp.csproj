@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{E6C07746-A88B-98E0-9D8B-0F018ED35D8F}</ProjectGuid>
+    <ProjectGuid>{D0246BCC-B2D5-48A5-B1AF-62578025BE56}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\TargetLocator.cs" />
     <Compile Include="Assets\Scripts\CoordinateLabeler.cs" />
     <Compile Include="Assets\Scripts\Tower.cs" />
+    <Compile Include="Assets\Pathfinding\Node.cs" />
+    <Compile Include="Assets\Pathfinding\GridManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AssetPacks\TextMesh Pro\Shaders\TMPro.cginc" />
