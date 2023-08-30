@@ -7,12 +7,14 @@ public class Pathfinder : MonoBehaviour
     [SerializeField]
 	[Tooltip("Start coords")]
 	Vector2Int startCoordinates;
+    public Vector2Int StartCoordinates { get { return startCoordinates; } }
 
     [SerializeField]
     [Tooltip("Destination coords")]
     Vector2Int destinationCoordinates;
+	public Vector2Int DesinationCoordinates { get { return destinationCoordinates; } }
 
-    Node startNode;
+	Node startNode;
     Node destinationNode;
 
     // Node that is currently searched
@@ -33,29 +35,34 @@ public class Pathfinder : MonoBehaviour
 		gridManager = FindObjectOfType<GridManager>();
         if(gridManager != null)
         {
-            grid = gridManager.Grid;
+			grid = gridManager.Grid;
+			startNode = grid[startCoordinates];
+			destinationNode = grid[destinationCoordinates];
         }
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
-        startNode = gridManager.Grid[startCoordinates];
-        destinationNode = gridManager.Grid[destinationCoordinates];
-
         GetNewPath();
 	}
 
     // Function for handeling creating path logic
     public List<Node> GetNewPath()
     {
-        gridManager.ResetNodes();
-		BreadthFirstSearch();
+        return GetNewPath(StartCoordinates);
+	}
+
+	// Overloaded Function for handeling creating path logic with coordinates param
+	public List<Node> GetNewPath(Vector2Int coordinates)
+	{
+		gridManager.ResetNodes();
+		BreadthFirstSearch(coordinates);
 		return BuildPath();
 	}
 
-    // Function for exploring neighbor nodes
-    void ExploreNeighbors()
+	// Function for exploring neighbor nodes
+	void ExploreNeighbors()
     {
         List<Node> neighbors = new List<Node>();
 
@@ -86,15 +93,18 @@ public class Pathfinder : MonoBehaviour
     }
 
 	// Function for BreadthFirstSearch algorithm (path finding)
-	void BreadthFirstSearch()
+	void BreadthFirstSearch(Vector2Int coordinates)
     {
-        frontier.Clear();
+		startNode.isWalkable = true;
+		destinationNode.isWalkable = true;
+
+		frontier.Clear();
         reached.Clear();
 
         bool isRunning = true;
 
-        frontier.Enqueue(startNode);
-        reached.Add(startCoordinates, startNode);
+        frontier.Enqueue(grid[coordinates]);
+        reached.Add(coordinates, grid[coordinates]);
 
         // Loop through the entire frontier queue as long as path is not found
         while(frontier.Count > 0 && isRunning ) 
@@ -153,6 +163,12 @@ public class Pathfinder : MonoBehaviour
         }
 
         return false;
+    }
+
+	// Function for notifying enemies to recalculate the path
+	public void NotifyReceivers()
+    {
+        BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
     }
 
 }

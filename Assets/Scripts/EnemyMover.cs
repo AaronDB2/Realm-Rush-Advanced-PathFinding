@@ -7,52 +7,52 @@ using UnityEngine;
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("List of waypoints to follow")]
-    List<Tile> path = new List<Tile>();
-
-    [SerializeField]
     [Tooltip("How fast the enemy moves")]
     [Range(0f, 5f)]
-    float speed = 1f;
 
+	List<Node> path = new List<Node>();
+	float speed = 1f;
     Enemy enemy;
+    GridManager gridManager;
+    Pathfinder pathfinder;
 
     // OnEnable is called when game object is enabled
     void OnEnable()
     {
-        FindPath();
-        ReturnToStart();
-        StartCoroutine(FollowPath());
+		ReturnToStart();
+		RecalculatePath(true);
     }
 
-	void Start()
+	void Awake()
 	{
 		enemy = GetComponent<Enemy>();
+        gridManager = FindObjectOfType<GridManager>();
+        pathfinder= FindObjectOfType<Pathfinder>();
 	}
 
 	// Function for finding the path
-	void FindPath()
+	void RecalculatePath(bool resetPath)
     {
-        path.Clear();
+		Vector2Int coordinates = new Vector2Int();
 
-        // Find gameobject with path tag
-        GameObject parent = GameObject.FindGameObjectWithTag("Path"); 
-
-        foreach (Transform child in parent.transform)
+        if(resetPath)
         {
-            Tile waypoint = child.GetComponent<Tile>();
-
-            if (waypoint != null)
-            {
-                path.Add(waypoint);
-            }
+            coordinates = pathfinder.StartCoordinates;
+        } else
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
         }
-    }
+
+        StopAllCoroutines();
+        path.Clear();
+        path = pathfinder.GetNewPath(coordinates);
+		StartCoroutine(FollowPath());
+	}
 
     // Set the gameobject to the first waypoint in path
     void ReturnToStart()
     {
-        transform.position = path[0].transform.position;
+        transform.position = gridManager.GetPositionFromCoordinates(pathfinder.StartCoordinates);
     }
 
     // Function that handles what happens if an enemy gets to the end of the path
@@ -65,11 +65,11 @@ public class EnemyMover : MonoBehaviour
 	// Coroutine Function for letting object follow the path
 	IEnumerator FollowPath() 
     {
-		foreach (Tile waypoint in path)
+		for(int i = 1; i < path.Count; i++)
         {
             Vector3 startPosition = transform.position;
-            Vector3 endPosition = waypoint.transform.position;
-            float travelPercent = 0f;
+            Vector3 endPosition = gridManager.GetPositionFromCoordinates(path[i].coordinates);
+			float travelPercent = 0f;
 
             transform.LookAt(endPosition);
 
