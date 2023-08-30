@@ -8,8 +8,17 @@ public class Tower : MonoBehaviour
     [Tooltip("Cost of the tower")]
     int cost = 75;
 
-    // Function for instantiating the tower game object
-    public bool CreateTower(Tower tower, Vector3 position)
+	[SerializeField]
+	[Tooltip("Build timer")]
+	float buildDelay = 1f;
+
+	void Start()
+	{
+        StartCoroutine(Build());
+	}
+
+	// Function for instantiating the tower game object
+	public bool CreateTower(Tower tower, Vector3 position)
     {
         Bank bank = FindObjectOfType<Bank>();
 
@@ -28,4 +37,27 @@ public class Tower : MonoBehaviour
 
         return false;
     }
+
+    // Function that implements a build time for the tower
+    IEnumerator Build()
+    {
+        foreach(Transform child in transform) 
+        { 
+            child.gameObject.SetActive(false);
+            foreach(Transform grandchild in child)
+            {
+                grandchild.gameObject.SetActive(false);
+            }
+        }
+
+		foreach (Transform child in transform)
+		{
+			child.gameObject.SetActive(true);
+            yield return new WaitForSeconds(buildDelay);
+			foreach (Transform grandchild in child)
+			{
+				grandchild.gameObject.SetActive(true);
+			}
+		}
+	}
 }
